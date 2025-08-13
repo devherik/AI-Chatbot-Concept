@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect, useRef } from "react";
 import profileImg from "../../assets/celim-profile.jpg";
 import closeIcon from "../../assets/icons/close.svg";
 import sendIcon from "../../assets/icons/ai-send.svg";
@@ -8,6 +8,14 @@ import TextareaAutosize from "react-textarea-autosize";
 export default function AiAgentPage() {
   const { messages, sendMessage, isStreaming } = useAiAgent();
   const [userInput, setUserInput] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    // Scroll to the bottom of the messages when they change
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   const handleUserMessage = useCallback(async () => {
     // Handle user message and invalidate input
@@ -118,6 +126,7 @@ export default function AiAgentPage() {
                 </div>
               </div>
             ))}
+            <div ref={messagesEndRef} style={{ height: "1px" }} />
           </div>
         </main>
         <footer
@@ -154,9 +163,8 @@ export default function AiAgentPage() {
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") {
+                if (e.key === "Enter" && !e.shiftKey) {
                   handleUserMessage();
-                  e.currentTarget.value = "";
                 }
               }}
             />
