@@ -100,18 +100,26 @@ export default function AiAgentPage() {
                   message.sender === "user" ? "justify-end" : ""
                 }`}
               >
-                <div
-                  className={`p-2 rounded-lg ${
-                    message.sender === "user"
-                      ? "bg-[var(--green-color)] text-[var(--inverted-color)]"
-                      : "bg-[var(--grey-color)] text-[var(--text-color)]"
-                  }`}
-                  style={{
-                    fontFamily: "var(--secondary-font)",
-                    textAlign: message.sender === "user" ? "right" : "left",
-                  }}
-                >
-                  <span style={{}}>{message.text}</span>
+                <div className="max-w-[70%] flex flex-col gap-1">
+                  {message.sender === "user" ? (
+                    <span style={{ textAlign: "right", fontSize: "12px" }}>Você</span>
+                  ) : (
+                    <span style={{ textAlign: "left", fontSize: "12px" }}>Celim</span>
+                  )}
+                  <div
+                    className={`p-2 rounded-lg ${
+                      message.sender === "user"
+                        ? "bg-[var(--green-color)] text-[var(--inverted-color)]"
+                        : "bg-[var(--grey-color)] text-[var(--text-color)]"
+                    }`}
+                    style={{
+                      fontFamily: "var(--secondary-font)",
+                      textAlign: message.sender === "user" ? "right" : "left",
+                      fontSize: "14px",
+                    }}
+                  >
+                    <span>{message.text}</span>
+                  </div>
                 </div>
               </div>
             ))}
