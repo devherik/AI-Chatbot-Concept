@@ -8,14 +8,11 @@ export default function AiAgentPage() {
   const { messages, sendMessage } = useAiAgent();
   const [userInput, setUserInput] = useState("");
 
-  const handleUserMessage = useCallback(
-    async () => {
-      // Handle user message and invalidate input
-      sendMessage(userInput);
-      setUserInput("");
-    },
-    [sendMessage, userInput]
-  );
+  const handleUserMessage = useCallback(async () => {
+    // Handle user message and invalidate input
+    sendMessage(userInput);
+    setUserInput("");
+  }, [sendMessage, userInput]);
 
   return (
     <>
@@ -28,7 +25,7 @@ export default function AiAgentPage() {
           flexDirection: "column",
           justifyContent: "space-between",
         }}
-        className="flex flex-col h-screen bg-[var(--main-bg-color)]"
+        className="flex flex-col h-screen bg-[var(--primary-color)]"
       >
         <header
           style={{
@@ -52,7 +49,15 @@ export default function AiAgentPage() {
                 alt="profile"
               />
             </picture>
-            <span style={{ fontWeight: "bold", fontSize: "20px" }}>Celim</span>
+            <span
+              style={{
+                fontWeight: "bold",
+                fontSize: "20px",
+                fontFamily: "var(--main-font)",
+              }}
+            >
+              Celim
+            </span>
           </div>
           <div className="absolute top-2 right-2">
             <button
@@ -71,7 +76,13 @@ export default function AiAgentPage() {
             </button>
           </div>
         </header>
-        <main>
+        <main
+          style={{
+            flex: 1,
+            overflowY: "auto",
+            padding: "16px",
+          }}
+        >
           <div
             style={{
               flex: 1,
@@ -92,11 +103,15 @@ export default function AiAgentPage() {
                 <div
                   className={`p-2 rounded-lg ${
                     message.sender === "user"
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200 text-black"
+                      ? "bg-[var(--green-color)] text-[var(--inverted-color)]"
+                      : "bg-[var(--grey-color)] text-[var(--text-color)]"
                   }`}
+                  style={{
+                    fontFamily: "var(--secondary-font)",
+                    textAlign: message.sender === "user" ? "right" : "left",
+                  }}
                 >
-                  {message.text}
+                  <span style={{}}>{message.text}</span>
                 </div>
               </div>
             ))}
@@ -114,10 +129,23 @@ export default function AiAgentPage() {
           }}
         >
           <div className="flex items-center gap-2 w-full">
-            <input
-              type="text"
-              placeholder="Digite sua mensagem..."
-              className="w-full p-2 border rounded-2xl"
+            <textarea
+              style={{
+                flex: 1,
+                padding: "8px 16px",
+                border: "1px solid var(--border-color)",
+                borderRadius: "16px",
+                outline: "none",
+                backgroundColor: "var(--primary-color)",
+                color: "var(--text-color)",
+                fontFamily: "var(--secondary-font)",
+                height: "100%",
+                boxSizing: "border-box",
+                resize: "none",
+              }}
+              rows={1}
+              cols={20}
+              placeholder="Me faça uma pergunta"
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               onKeyDown={(e) => {
@@ -135,8 +163,13 @@ export default function AiAgentPage() {
                 cursor: "pointer",
                 width: "32px",
               }}
+              onClick={handleUserMessage}
             >
-              <img style={{ width: "24px", height: "24px" }} src={sendIcon} alt="Send" />
+              <img
+                style={{ width: "32px", height: "32px" }}
+                src={sendIcon}
+                alt="Send"
+              />
             </button>
           </div>
         </footer>
