@@ -41,14 +41,19 @@ export default function AiAgentProvider({
     try {
       await server
         .sendRequest({ message })
-        .then((response) => {
-          // const answer = response?.answer || "Desculpe, não consegui entender.";
-          // const aiMessage: AiAgentMessage = {
-          //   text: answer,
-          //   sender: "ai",
-          // };
-          // setMessages((prevMessages) => [...prevMessages, aiMessage]);
-          console.log("Response from server:", response?.body);
+        .then(async (response) => {
+          if (!response) {
+            throw new Error("No response from server");
+          }
+          const data = await response.json();
+          console.log("Response from server:", data);
+          const answer = data.message || "Desculpe, não consegui entender.";
+          const aiMessage: AiAgentMessage = {
+            text: answer,
+            sender: "ai",
+          };
+          setMessages((prevMessages) => [...prevMessages, aiMessage]);
+          console.log("Response from server:", data);
         })
         .catch((error) => {
           console.error("Error parsing response:", error);
