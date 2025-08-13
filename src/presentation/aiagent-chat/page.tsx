@@ -6,9 +6,9 @@ import { useAiAgent } from "../../hooks/useAiAgent";
 export default function AiAgentPage() {
   const { messages, sendMessage } = useAiAgent();
 
-  const handleUserMessage = useCallback((message: string) => {
+  const handleUserMessage = useCallback(async (message: string) => {
     // Handle user message and invalidate input
-    sendMessage(message);
+    await sendMessage(message);
   }, [sendMessage]);
 
   return (
