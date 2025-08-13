@@ -1,15 +1,21 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import profileImg from "../../assets/celim-profile.jpg";
 import closeIcon from "../../assets/icons/close.svg";
+import sendIcon from "../../assets/icons/ai-send.svg";
 import { useAiAgent } from "../../hooks/useAiAgent";
 
 export default function AiAgentPage() {
   const { messages, sendMessage } = useAiAgent();
+  const [userInput, setUserInput] = useState("");
 
-  const handleUserMessage = useCallback(async (message: string) => {
-    // Handle user message and invalidate input
-    await sendMessage(message);
-  }, [sendMessage]);
+  const handleUserMessage = useCallback(
+    async () => {
+      // Handle user message and invalidate input
+      sendMessage(userInput);
+      setUserInput("");
+    },
+    [sendMessage, userInput]
+  );
 
   return (
     <>
@@ -96,26 +102,43 @@ export default function AiAgentPage() {
             ))}
           </div>
         </main>
-        <footer style={{
-          padding: "12px 16px",
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-          position: "relative",
-          bottom: 0,
-        }}>
-          <input
-            type="text"
-            placeholder="Digite sua mensagem..."
-            className="w-full p-2 border rounded-lg"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleUserMessage(e.currentTarget.value);
-                e.currentTarget.value = "";
-              }
-            }}
-          />
+        <footer
+          style={{
+            padding: "12px 16px",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            position: "relative",
+            bottom: 0,
+          }}
+        >
+          <div className="flex items-center gap-2 w-full">
+            <input
+              type="text"
+              placeholder="Digite sua mensagem..."
+              className="w-full p-2 border rounded-2xl"
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleUserMessage();
+                  e.currentTarget.value = "";
+                }
+              }}
+            />
+            <button
+              style={{
+                background: "none",
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
+                width: "32px",
+              }}
+            >
+              <img style={{ width: "24px", height: "24px" }} src={sendIcon} alt="Send" />
+            </button>
+          </div>
         </footer>
       </div>
     </>

@@ -5,24 +5,19 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  background-color: var(--secondary-bg-color);
+  background-color: var(--inverted-color);
 
   --main-font: Instrument Serif;
   --secondary-font: Instrument Sans;
-  --main-bg-color: #fffcff;
-  --main-text-color: #28282B;
-  --main-border-color: #28282B;
-  --main-accent-color: #ff4d4d;
+  --primary-color: #FFFCFF;
+  --inverted-color: #28282B;
+  --secondary-color: #F2F2F2;
+  --tertiary-color: #96E6B3;
+  --surface-color: #EFEFEF;
+  --text-color: #0D2818;
+  --border-color: #82846D;
+  --accent-color: #82846D;
 
-  --secondary-bg-color: #28282B;
-  --secondary-text-color: #FFFCFF;
-  --secondary-border-color: #dcdcdc;
-  --secondary-accent-color: #ffb3b3;
-
-  --neutral-bg-color: #f0f0f0;
-  --neutral-text-color: #7d7d7d;
-  --neutral-border-color: #e0e0e0;
-  --neutral-accent-color: #ffb3b3;
 
   --red-color: #EF3054;
   --green-color: #96E6B3;
