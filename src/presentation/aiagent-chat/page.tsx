@@ -3,6 +3,7 @@ import profileImg from "../../assets/celim-profile.jpg";
 import closeIcon from "../../assets/icons/close.svg";
 import sendIcon from "../../assets/icons/ai-send.svg";
 import { useAiAgent } from "../../hooks/useAiAgent";
+import TextareaAutosize from "react-textarea-autosize";
 
 export default function AiAgentPage() {
   const { messages, sendMessage, isStreaming } = useAiAgent();
@@ -132,7 +133,7 @@ export default function AiAgentPage() {
           }}
         >
           <div className="flex items-center gap-2 w-full">
-            <textarea
+            <TextareaAutosize
               style={{
                 flex: 1,
                 padding: "8px 16px",
@@ -142,11 +143,12 @@ export default function AiAgentPage() {
                 backgroundColor: "var(--primary-color)",
                 color: "var(--text-color)",
                 fontFamily: "var(--secondary-font)",
-                height: "100%",
                 boxSizing: "border-box",
                 resize: "none",
               }}
-              rows={1}
+              minRows={1}
+              maxRows={4}
+              maxLength={100}
               cols={20}
               placeholder="Me faça uma pergunta"
               value={userInput}
