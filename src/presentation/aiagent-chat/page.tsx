@@ -5,7 +5,7 @@ import sendIcon from "../../assets/icons/ai-send.svg";
 import { useAiAgent } from "../../hooks/useAiAgent";
 
 export default function AiAgentPage() {
-  const { messages, sendMessage } = useAiAgent();
+  const { messages, sendMessage, isStreaming } = useAiAgent();
   const [userInput, setUserInput] = useState("");
 
   const handleUserMessage = useCallback(async () => {
@@ -31,6 +31,8 @@ export default function AiAgentPage() {
           style={{
             padding: "12px 16px",
             width: "100%",
+            height: "64px",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -58,6 +60,7 @@ export default function AiAgentPage() {
             >
               Celim
             </span>
+            {isStreaming && <span style={{ fontSize: "12px" }}>Digitando...</span>}
           </div>
           <div className="absolute top-2 right-2">
             <button
@@ -83,16 +86,7 @@ export default function AiAgentPage() {
             padding: "16px",
           }}
         >
-          <div
-            style={{
-              flex: 1,
-              overflowY: "auto",
-              padding: "16px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "12px",
-            }}
-          >
+          <div>
             {messages.map((message, index) => (
               <div
                 key={index}
@@ -134,6 +128,7 @@ export default function AiAgentPage() {
             gap: "8px",
             position: "relative",
             bottom: 0,
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
           }}
         >
           <div className="flex items-center gap-2 w-full">

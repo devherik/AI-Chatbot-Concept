@@ -6,6 +6,7 @@ import AiAgentServer from "../server/AiAgentServer";
 interface AiAgentContextType {
   messages: AiAgentMessage[];
   sendMessage: (message: string) => void;
+  isStreaming: boolean;
 }
 
 type Sender = "user" | "ai";
@@ -30,6 +31,7 @@ export default function AiAgentProvider({
 }) {
   const server = AiAgentServer.getInstance();
   const [messages, setMessages] = useState<AiAgentMessage[]>([WELCOME_MESSAGE]);
+  const [isStreaming, setIsStreaming] = useState(false);
 
   const sendMessage = useCallback(async (message: string) => {
     const userMessage: AiAgentMessage = {
@@ -39,6 +41,7 @@ export default function AiAgentProvider({
     setMessages((prevMessages) => [...prevMessages, userMessage]);
 
     try {
+      setIsStreaming(true);
       await server
         .sendRequest({ message })
         .then(async (response) => {
@@ -52,10 +55,12 @@ export default function AiAgentProvider({
             text: answer,
             sender: "ai",
           };
+          setIsStreaming(false);
           setMessages((prevMessages) => [...prevMessages, aiMessage]);
           console.log("Response from server:", data);
         })
         .catch((error) => {
+          setIsStreaming(false);
           console.error("Error parsing response:", error);
           return null;
         });
@@ -68,8 +73,9 @@ export default function AiAgentProvider({
     () => ({
       messages,
       sendMessage,
+      isStreaming,
     }),
-    [messages, sendMessage]
+    [messages, sendMessage, isStreaming]
   );
   return (
     <AiAgentContext.Provider value={value}>{children}</AiAgentContext.Provider>
