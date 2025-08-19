@@ -1,0 +1,15 @@
+.novo_chamado_btn {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--green-color);
+    color: var(--primary-color);
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    transition: background-color 0.3s ease;
+}
+
+.novo_chamado_btn:hover {
+    background-color: var(--inverted-color);
+}

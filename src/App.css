@@ -24,3 +24,9 @@
   --blue-color: #97D2FB;
   --grey-color: #EFEFEF;
 }
+
+@media screen and (min-width: 1441px) {
+  :root {
+    padding: 2rem 10rem;
+  }
+}

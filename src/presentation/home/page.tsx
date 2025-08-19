@@ -1,10 +1,18 @@
 import SlideInEffect from "../../animations/slideIn/SlideInEffect";
+import logoP1 from "../../assets/logos/p1Logo.png";
+import NavBarComp from "./components/navbar";
+import style from "./style.module.css";
 
 export default function HomePage() {
   return (
     <SlideInEffect duration={1}>
-      <h1>Welcome to the Home Page</h1>
-      <p>This is the main entry point of the application.</p>
+      <header className="flex flex-row fixed top-0 left-0 w-full h-16 bg-[var(--primary-color)] justify-between items-center px-4">
+        <picture>
+            <img src={logoP1} alt="Logo P1" className="h-12" style={{ width: "10vw", objectFit: "contain" }} />
+        </picture>
+        <NavBarComp />
+        <button className={style.novo_chamado_btn}>Novo Chamado</button>
+      </header>
     </SlideInEffect>
   );
 }
